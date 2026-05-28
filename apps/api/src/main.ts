@@ -20,7 +20,10 @@ async function bootstrap() {
   app.use(express.urlencoded({ extended: true }));
   const configService = app.get(ConfigService);
 
-  const port = configService.get<number>('API_PORT', 3001);
+  // Render and most PaaS injects PORT; honour it before our app-specific var.
+  const port =
+    configService.get<number>('PORT') ??
+    configService.get<number>('API_PORT', 3001);
   const prefix = configService.get<string>('API_PREFIX', '/api/v1');
 
   app.setGlobalPrefix(prefix);

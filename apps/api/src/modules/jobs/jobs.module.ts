@@ -26,13 +26,23 @@ function parseRedisConnection(url: string | undefined) {
   if (!url) return null;
   try {
     const parsed = new URL(url);
+    // Reject http(s) etc. — common mistake is using an Upstash REST URL where
+    // a wire-protocol redis://... URL is required. ioredis can't speak HTTP,
+    // so it'd just ECONNRESET-loop forever.
+    if (parsed.protocol !== 'redis:' && parsed.protocol !== 'rediss:') {
+      logger.warn(
+        `REDIS_URL has unsupported scheme "${parsed.protocol}" — expected redis:// or rediss://. Background jobs disabled.`,
+      );
+      return null;
+    }
     return {
       host: parsed.hostname,
       port: parsed.port ? parseInt(parsed.port, 10) : 6379,
-      username: parsed.username || undefined,
-      password: parsed.password || undefined,
+      username: parsed.username ? decodeURIComponent(parsed.username) : undefined,
+      password: parsed.password ? decodeURIComponent(parsed.password) : undefined,
       // BullMQ requires this set to null for blocking commands.
       maxRetriesPerRequest: null as null,
+      ...(parsed.protocol === 'rediss:' ? { tls: {} } : {}),
     };
   } catch (err) {
     logger.warn(`Invalid REDIS_URL: ${(err as Error).message}`);
