@@ -7,7 +7,7 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "build:api": "npx turbo run build --filter=api",
-    "render:build": "NODE_ENV=development pnpm install --no-frozen-lockfile --prod=false && cd apps/api && npx prisma generate && cd ../.. && npx turbo run build --filter=api",
+    "render:build": "NODE_ENV=development pnpm install --no-frozen-lockfile --prod=false && cd apps/api && npx prisma generate && npx prisma migrate deploy && cd ../.. && npx turbo run build --filter=api",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",

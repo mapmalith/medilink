@@ -4,7 +4,7 @@ services:
     runtime: node
     region: singapore
     plan: free
-    buildCommand: "NODE_ENV=development pnpm install --no-frozen-lockfile --prod=false && cd apps/api && npx prisma generate && cd ../.. && npx turbo run build --filter=api"
+    buildCommand: "NODE_ENV=development pnpm install --no-frozen-lockfile --prod=false && cd apps/api && npx prisma generate && npx prisma migrate deploy && cd ../.. && npx turbo run build --filter=api"
     startCommand: "node apps/api/dist/main.js"
     healthCheckPath: /api/v1/health
     envVars:
