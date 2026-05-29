@@ -219,6 +219,25 @@ export class AdminHotelsService {
 
   // --- QR Codes ---
 
+  async listAllQRCodes() {
+    const codes = await this.prisma.qRCode.findMany({
+      include: {
+        hotel: { select: { id: true, name: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+    return codes.map((qr) => ({
+      id: qr.id,
+      code: qr.code,
+      location: qr.location,
+      isActive: qr.isActive,
+      scanCount: qr.scanCount,
+      createdAt: qr.createdAt,
+      hotelId: qr.hotelId,
+      hotelName: qr.hotel.name,
+    }));
+  }
+
   async getQRCodes(hotelId: string) {
     const hotel = await this.prisma.hotel.findUnique({
       where: { id: hotelId },

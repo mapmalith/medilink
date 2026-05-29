@@ -7,6 +7,7 @@ import { AdminDoctorsController } from './admin-doctors.controller';
 import { AdminDoctorsService } from './admin-doctors.service';
 import { AdminHotelsController } from './admin-hotels.controller';
 import { AdminHotelsService } from './admin-hotels.service';
+import { AdminQRCodesController } from './admin-qr-codes.controller';
 import { AdminPatientsController } from './admin-patients.controller';
 import { AdminPatientsService } from './admin-patients.service';
 import { AdminDrugsController } from './admin-drugs.controller';
@@ -28,6 +29,7 @@ import { JobsModule } from '../modules/jobs/jobs.module';
     AdminPricingController,
     AdminDoctorsController,
     AdminHotelsController,
+    AdminQRCodesController,
     AdminPatientsController,
     AdminDrugsController,
     AdminStaffController,
