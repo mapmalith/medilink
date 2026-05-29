@@ -6,7 +6,6 @@ import { format, parseISO } from 'date-fns';
 import DailyIframe, { type DailyCall } from '@daily-co/daily-js';
 import { Clock, Loader2, User, Video } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ProtectedRoute } from '@/components/auth/protected-route';
 import { useAuthStore } from '@/stores/auth-store';
